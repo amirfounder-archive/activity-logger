@@ -13,15 +13,20 @@ This program will log a user's:
 - Computer (required)
 - Python 3.8
 
-- pynput library
+## Installed with Python
+
+- 'threading' library
+  - Docs: https://docs.python.org/3/library/threading.html
+- 'os' library
+  - Docs: https://docs.python.org/3/library/os.html
+
+## External Libraries
+
+- 'pynput' library
   - Package Index: https://pypi.org/project/pynput/
   - Docs: https://pynput.readthedocs.io/en/latest/index.html
-- six: (Pynput dependency)
+- 'six' library: (Pynput dependency)
   - Docs: https://six.readthedocs.io/
-- threading library
-  - Docs: https://docs.python.org/3/library/threading.html
-- os library
-  - Docs: https://docs.python.org/3/library/os.html
 
 # Usage
 
