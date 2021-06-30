@@ -16,7 +16,7 @@ def log(event):
 
 
 def write_to_file(content, pathname):
-  """Writes something to file
+  """Writes content to file
 
   Args:
       content (String): Content
@@ -27,10 +27,10 @@ def write_to_file(content, pathname):
 
 
 def generate_logging_target_file():
-  """Generates the target fil for logging
+  """Generates a file pathname for logging
 
   Returns:
-      String: Target file path
+      String: File pathname
   """
   today = generate_date()
   project_path = get_project_path()
@@ -47,6 +47,8 @@ def generate_logging_target_file():
   
   # GET TODAY'S LOG FILES
   logs = os.listdir('{}/logs/{}'.format(project_path, today))
+
+  # IF TODAY HAS NO LOG FILE, RETURN '1.log'
   if len(logs) == 0:
     return '{}/logs/{}/1.log'.format(project_path, today)
   
@@ -61,7 +63,7 @@ def generate_logging_target_file():
     )
   )
 
-  # RETURN TARGET FILE
+  # RETURN TARGET FILE PATHNAME
   return '{}/logs/{}/{}.log'.format(
     project_path,
     today,
