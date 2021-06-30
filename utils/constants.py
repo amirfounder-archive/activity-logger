@@ -1,0 +1,2 @@
+PROJECT_NAME = 'activity-logger'
+MAX_LOG_FILE_SIZE = 50000000 # 50 MB

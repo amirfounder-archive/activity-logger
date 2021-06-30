@@ -1,1 +1,11 @@
+### VIRTUAL ENV ###
+
 /.venv
+
+### LOGS ###
+
+**/logs/**
+
+### CACHING ###
+
+**/__pycache__
