@@ -6,6 +6,13 @@ from utils.constants import MAX_LOG_FILE_SIZE
 from utils.utils import get_project_path, generate_timestamp, generate_date
 
 
+killed = False
+
+
+class MyException(Exception):
+  pass
+
+
 def log(event):
   """Logs events to file
 
@@ -85,6 +92,11 @@ def on_press(key):
   timestamp = generate_timestamp()
   log('{},kpress,{}'.format(timestamp, key))
 
+  if key == keyboard.Key.ctrl_r:
+    global killed
+    killed = True
+    raise MyException(key)
+
 
 def on_release(key):
   """Logs the key released
@@ -109,6 +121,9 @@ def on_move(x, y):
   timestamp = generate_timestamp()
   log('{},mmove,{},{}'.format(timestamp, x, y))
 
+  if killed:
+    raise MyException()
+
 
 def on_click(x, y, button, pressed):
   """Logs the position of click
@@ -121,6 +136,9 @@ def on_click(x, y, button, pressed):
   """
   timestamp = generate_timestamp()
   log('{},mclick,{},{},{},{}'.format(timestamp, x, y, button, 'down' if pressed else 'up'))
+
+  if killed:
+    raise MyException()
 
 
 def on_scroll(x, y, dx, dy):
@@ -135,6 +153,9 @@ def on_scroll(x, y, dx, dy):
   timestamp = generate_timestamp()
   log('{},mscroll,{},{},{},{}'.format(timestamp, x, y, dx, 'down' if dy < 0 else 'up'))
 
+  if killed:
+    raise MyException()
+
 
 # LISTENERS
 
@@ -147,7 +168,10 @@ def activate_mouse_listener():
     on_click=on_click,
     on_scroll=on_scroll
   ) as mouse_listener:
-    mouse_listener.join()
+    try:
+      mouse_listener.join()
+    except MyException:
+      print('stopping')
 
 
 def activate_keyboard_listener():
@@ -157,7 +181,10 @@ def activate_keyboard_listener():
     on_press=on_press,
     on_release=on_release
   ) as keyboard_listener:
-    keyboard_listener.join()
+    try:
+      keyboard_listener.join()
+    except MyException:
+      print('stopping')
 
 
 # THREADING
@@ -168,6 +195,3 @@ t2 = threading.Thread(target=activate_keyboard_listener)
 
 t1.start()
 t2.start()
-
-t1.join()
-t2.join()
