@@ -136,6 +136,7 @@ def on_click(x, y, button, pressed):
         pressed (Boolean): Whether pressed or not
     """
     timestamp = generate_timestamp()
+    pressed = 'pressed' if pressed == True else 'released'
     log(f'{timestamp},{MOUSE_CLICK_EVENT},{x},{y},{button},{pressed}')
 
     if killed:
@@ -152,6 +153,7 @@ def on_scroll(x, y, dx, dy):
         dy (Int): Vertical Scroll direction
     """
     timestamp = generate_timestamp()
+    dy = 'up' if dy > 0 else 'down'
     log(f'{timestamp},{MOUSE_SCROLL_EVENT},{x},{y},{dx},{dy}')
 
     if killed:
