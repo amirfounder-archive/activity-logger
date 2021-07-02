@@ -97,6 +97,3 @@ class Parser:
             'type': attrs[1],
             'key': attrs[2]
         }
-
-
-parser = Parser(date="2021_06_29")

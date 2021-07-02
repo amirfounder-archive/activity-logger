@@ -1,5 +1,6 @@
 import os
 from pynput import keyboard, mouse
+import threading
 
 from utils.constants import *
 from utils.utils import get_project_path, generate_timestamp, generate_date
@@ -13,6 +14,15 @@ class Logger:
 
     def __init__(self):
         self.kill_logger = False
+
+    def start_logger(self):
+      t1 = threading.Thread(target=self.activate_mouse_listener)
+      t2 = threading.Thread(target=self.activate_keyboard_listener)
+
+      t1.start()
+      t2.start()
+
+    # LOGGING
 
     def log_event(self, event):
         """Logs events to file
@@ -79,6 +89,8 @@ class Logger:
             last_file_size < MAX_LOG_FILE_SIZE else
             int(last_file_name) + 1
         )
+
+    # KEYBOARD
 
     def on_press(self, key):
         """Logs the key pressed

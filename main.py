@@ -1,10 +1,12 @@
+from Grapher import Grapher
+from datetime import datetime
 from Logger import Logger
-import threading
+from Parser import Parser
 
 logger = Logger()
+parser = Parser(date="2021_06_29")
 
-t1 = threading.Thread(target=logger.activate_mouse_listener)
-t2 = threading.Thread(target=logger.activate_keyboard_listener)
+events = parser.get_logged_events()
 
-t1.start()
-t2.start()
+for event in events:
+    print(event)
