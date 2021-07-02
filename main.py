@@ -4,9 +4,9 @@ from Logger import Logger
 from Parser import Parser
 
 logger = Logger()
-parser = Parser(date="2021_06_29")
+parser = Parser(date="2021_06_30")
 
 events = parser.get_logged_events()
+grapher = Grapher(events)
 
-for event in events:
-    print(event)
+data = grapher.data

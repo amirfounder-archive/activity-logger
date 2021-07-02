@@ -1,5 +1,5 @@
 import os
-from utils.constants import KEY_PRESS_EVENT, KEY_RELEASE_EVENT, MOUSE_CLICK_EVENT, MOUSE_MOVE_EVENT, MOUSE_SCROLL_EVENT
+from utils.constants import *
 
 from utils.utils import generate_date, get_project_path
 
@@ -29,27 +29,29 @@ class Parser:
             formatted = []
             for event in logged_events:
                 if event != '':
-                    formatted.append(self.format_event(event))
+                    formatted.append(self.format_event(event, logged_events))
             return formatted
 
         return logged_events
 
-    def format_event(self, event):
+    def format_event(self, event, logged_events):
         event_attributes = event.split(',')
-        event_type = event_attributes[1]
-
-        if event_type == MOUSE_SCROLL_EVENT:
-            return self.parse_mouse_scroll_event(event_attributes)
-        elif event_type == MOUSE_CLICK_EVENT:
-            return self.parse_mouse_click_event(event_attributes)
-        elif event_type == MOUSE_MOVE_EVENT:
-            return self.parse_mouse_move_event(event_attributes)
-        elif event_type == KEY_PRESS_EVENT:
-            return self.parse_key_press_event(event_attributes)
-        elif event_type == KEY_RELEASE_EVENT:
-            return self.parse_key_release_event(event_attributes)
-        else:
-            print('not a valid mouse event type')
+        try:
+            event_type = event_attributes[1]
+            if event_type == MOUSE_SCROLL_EVENT:
+                return self.parse_mouse_scroll_event(event_attributes)
+            elif event_type == MOUSE_CLICK_EVENT:
+                return self.parse_mouse_click_event(event_attributes)
+            elif event_type == MOUSE_MOVE_EVENT:
+                return self.parse_mouse_move_event(event_attributes)
+            elif event_type == KEY_PRESS_EVENT:
+                return self.parse_key_press_event(event_attributes)
+            elif event_type == KEY_RELEASE_EVENT:
+                return self.parse_key_release_event(event_attributes)
+            else:
+                print('not a valid mouse event type')
+        except IndexError:
+            print(f'Index out of range on line: {logged_events.index(event)} in folder: ${self.date}')
 
     @staticmethod
     def parse_mouse_click_event(attrs):
