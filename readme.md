@@ -33,4 +33,4 @@ This program will log a user's:
 1. CD into yoru project directory
 2. Install external libraries: `pip install -r requirements.txt`
 3. Run main class
-4. To kill logger, press the right ctrl key and perform any action with the mouse (move, click, scroll)
+4. To kill logger, press `'ctrl_r' + 'shift_r' + 'del'` and perform any action with the mouse (move, click, scroll)

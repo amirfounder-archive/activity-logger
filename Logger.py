@@ -12,8 +12,11 @@ class MyException(Exception):
 
 class Logger:
 
-    def __init__(self):
+    def __init__(self, print=False):
         self.kill_logger = False
+        self.print = print
+        self.kill_key_1 = False
+        self.kill_key_2 = False
 
     def start_logger(self):
       t1 = threading.Thread(target=self.activate_mouse_listener)
@@ -31,6 +34,7 @@ class Logger:
             event (String): Event
         """
         self.write_to_file(event, self.generate_log_file())
+        if self.print: print(event)
 
     @staticmethod
     def write_to_file(content, pathname):
@@ -102,8 +106,15 @@ class Logger:
         self.log_event(f'{timestamp},{KEY_PRESS_EVENT},{key}')
 
         if key == keyboard.Key.ctrl_r:
-            self.kill_logger = True
-            raise MyException()
+            self.kill_key_1 = True
+
+        if key == keyboard.Key.shift_r:
+            self.kill_key_2 = True
+        
+        if key == keyboard.Key.delete:
+            if self.kill_key_1 and self.kill_key_2:
+                self.kill_logger = True
+                raise MyException()
 
     def on_release(self, key):
         """Logs the key released
@@ -113,6 +124,12 @@ class Logger:
         """
         timestamp = generate_timestamp()
         self.log_event(f'{timestamp},{KEY_RELEASE_EVENT},{key}')
+
+        if key == keyboard.Key.ctrl_r:
+            self.kill_key_1 = False
+        
+        if key == keyboard.Key.shift_r:
+            self.kill_key_2 = False
 
     # MOUSE
 
