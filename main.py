@@ -1,22 +1,25 @@
 from matplotlib.pyplot import ylabel
-from Processor import Processor
-from Visualizer import Visualizer
 from datetime import datetime
-from Logger import Logger
-from Parser import Parser
+
+from classes.Calculator import Calculator
+from classes.Grapher import Grapher
+from classes.Logger import Logger
+from classes.Parser import Parser
 
 # LOGGING DATA
-logger = Logger(print=True)
-logger.start_logger()
+# logger = Logger(print=True)
+# logger.start_logger()
 
 # PROCESS DATA
-# parser = Parser(date="2021_06_30")
-# processor = Processor()
+parser = Parser()
+calculator = Calculator()
 
-# events = parser.get_logged_events()
-# visualizer = Visualizer(events)
+events = parser.get_all_logged_events()
+for event in events:
+  print(event)
+# visualizer = Grapher(events)
 
 # mouse_movements = visualizer.get_mouse_movements()
-# speeds = processor.generate_mouse_movement_speed(mouse_movements)
+# speeds = calculator.generate_mouse_movement_speed(mouse_movements)
 
 # visualizer.generate_plot([speeds,], y_label="pixels / millisecond")

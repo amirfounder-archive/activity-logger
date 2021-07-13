@@ -1,12 +1,12 @@
 import math
 
 
-class Processor:
+class Calculator:
 
     def __init__(self) -> None:
         pass
 
-    # MATH
+    # HELPER
 
     def generate_distance_between_coordinates(self, coords1, coords2):
         x1, y1 = coords1
