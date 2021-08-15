@@ -6,7 +6,7 @@ setup(
   description="Logs activity to a file",
   py_modules=[
     "main",
-    "utils.Logger"
+    "utils"
   ],
   package_dir={
     "":"src"
