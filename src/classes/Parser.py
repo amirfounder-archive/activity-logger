@@ -39,6 +39,58 @@ class Parser:
 
         return self.format_events(logged_events) if format else logged_events
 
+    # FILTER EVENTS
+
+    def filter_by_event_type(self, events, event_type):
+        return list(filter(lambda e: e != None and (e['type'] == event_type), events))
+    
+    def filter_by_multiple_event_types(self, events, event_types):
+        events = []
+        
+        for event_type in event_types:
+            events += self.filter_by_event_type(events, event_type)
+        
+        return events
+
+    def filter_by_mouse_movement_events(self, events):
+        return self.filter_by_event_type(events, MOUSE_MOVE_EVENT)
+    
+    def filter_by_mouse_click_events(self, events):
+        return self.filter_by_event_type(events, MOUSE_CLICK_EVENT)
+    
+    def filter_by_mouse_scroll_events(self, events):
+        return self.filter_by_event_type(events, MOUSE_SCROLL_EVENT)
+    
+    def filter_by_keyboard_press_events(self, events):
+        return self.filter_by_event_type(events, KEY_PRESS_EVENT)
+    
+    def filter_by_keyboard_release_events(self, events):
+        return self.filter_by_event_type(events, KEY_RELEASE_EVENT)
+
+    def filter_events(self, events):
+        data = {
+            'mouse_movements': [],
+            'mouse_clicks': [],
+            'mouse_scrolls': [],
+            'key_presses': [],
+            'key_releases': []
+        }
+        for event in events:
+            if event == None:
+                pass
+            elif event['type'] == MOUSE_MOVE_EVENT:
+                data['mouse_movements'].append(event)
+            elif event['type'] == MOUSE_SCROLL_EVENT:
+                data['mouse_scrolls'].append(event)
+            elif event['type'] == MOUSE_CLICK_EVENT:
+                data['mouse_clicks'].append(event)
+            elif event['type'] == KEY_PRESS_EVENT:
+                data['key_presses'].append(event)
+            elif event['type'] == KEY_RELEASE_EVENT:
+                data['key_releases'].append(event)
+            else:
+                pass
+        return data
     # FORMAT EVENTS
 
     def format_events(self, events):

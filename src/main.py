@@ -1,3 +1,4 @@
+from utils.constants import MOUSE_CLICK_EVENT
 from matplotlib.pyplot import ylabel
 from datetime import datetime
 
@@ -12,11 +13,13 @@ from classes.Parser import Parser
 
 # PROCESS DATA
 parser = Parser()
-calculator = Calculator()
 
 events = parser.get_all_logged_events()
-for event in events:
-  print(event)
+data = parser.filter_events(events)
+for key in data:
+  print(f'{key}: {len(data[key])}')
+
+# calculator = Calculator()
 # visualizer = Grapher(events)
 
 # mouse_movements = visualizer.get_mouse_movements()
